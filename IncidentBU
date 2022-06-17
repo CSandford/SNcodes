@@ -1,0 +1,22 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        if (g_form.getValue('u_business_unit') == '') {
+            var getUnit = new GlideAjax('global.RequestUtilsBU');
+            getUnit.addParam('sysparm_name', 'getBusUnit');
+            getUnit.addParam('sysparm_user', g_form.getValue('caller_id'));
+            getUnit.getXMLAnswer(function setUnit(answer) {
+                g_form.setValue('u_business_unit', answer);
+                //alert(g_form.getValue('u_business_unit'));
+            });
+        }
+        return;
+    }
+
+    //Type appropriate comment here, and begin script below
+    var getUnit = new GlideAjax('global.RequestUtilsBU');
+    getUnit.addParam('sysparm_name', 'getBusUnit');
+    getUnit.addParam('sysparm_user', g_form.getValue('caller_id'));
+    getUnit.getXMLAnswer(function setUnit(answer) {
+        g_form.setValue('u_business_unit', answer);
+    });
+}
