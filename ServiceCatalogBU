@@ -1,0 +1,21 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        var getUnit = new GlideAjax('global.RequestUtilsBU');
+        getUnit.addParam('sysparm_name', 'getBusUnit');
+        getUnit.addParam('sysparm_user', '');
+        getUnit.addParam('sysparm_ritm', g_form.getValue('request_item'));
+        getUnit.getXMLAnswer(function setUnit(answer) {
+            g_form.setValue('u_business_unit', answer);
+        });
+        return;
+    }
+
+    //Type appropriate comment here, and begin script below
+    var getUnit = new GlideAjax('global.RequestUtilsBU');
+    getUnit.addParam('sysparm_name', 'getBusUnit');
+    getUnit.addParam('sysparm_user', '');
+    getUnit.addParam('sysparm_ritm', g_form.getValue('request_item'));
+    getUnit.getXMLAnswer(function setUnit(answer) {
+        g_form.setValue('u_business_unit', answer);
+    });
+}
