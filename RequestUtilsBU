@@ -1,0 +1,49 @@
+var RequestUtilsBU = Class.create();
+RequestUtilsBU.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getBusUnit: function() {
+        var user = this.getParameter('sysparm_user');
+        var ritm = this.getParameter('sysparm_ritm');
+
+        if (user != '') {
+            var getUnit = new GlideRecord('sys_user');
+            getUnit.get(user);
+
+            if (getUnit) {
+                return getUnit.getValue('u_business_unit');
+            }
+        } else {
+            var getRitm = new GlideRecord('sc_req_item');
+            getRitm.get(ritm);
+
+            if (getRitm) {
+                var getUnit = new GlideRecord('sys_user');
+                getUnit.get(getRitm.getValue('requested_for'));
+
+                if (getUnit) {
+                    return getUnit.getValue('u_business_unit');
+                }
+            }
+        }
+    },
+    getCISupport: function() {
+        var ci = this.getParameter('sysparm_ci');
+        gs.info('CSTAN sysparm ' + ci);
+
+        var getSupport = new GlideRecord('cmdb_ci');
+        getSupport.get(ci);
+
+        gs.info('CSTAN getSupport ' + getSupport.getUniqueValue());
+        gs.info('CSTAN getSupport group ' + getSupport.getValue('support_group'));
+
+        if (getSupport.getValue('support_group') == null || getSupport.getValue('support_group') == '') {
+            gs.info('CSTAN inside if ');
+            return 'd625dccec0a8016700a222a0f7900d06';
+        } else {
+            gs.info('CSTAN inside else');
+            return getSupport.getValue('support_group');
+        }
+
+
+    },
+    type: 'RequestUtilsBU'
+});
