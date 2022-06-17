@@ -1,0 +1,14 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+
+    var configItemGroup = new GlideAjax('global.RequestUtilsBU');
+    configItemGroup.addParam('sysparm_name', 'getCISupport');
+    configItemGroup.addParam('sysparm_ci', g_form.getValue('cmdb_ci'));
+    configItemGroup.getXMLAnswer(function setAssignmentGroup(answer) {
+        console.log("TEST " + answer);
+        g_form.setValue('assignment_group', answer);
+    });
+
+}
