@@ -1,0 +1,14 @@
+(function executeRule(current, previous /*null when async*/ ) {
+
+    var assessmentinstance = new GlideRecord('asmt_assessment_instance');
+    assessmentinstance.addQuery('task_id', current.sys_id);
+    assessmentinstance.query();
+    if (!assessmentinstance.next()) {
+        current.setAbortAction(true);
+        gs.addInfoMessage('A risk assessment must be completed prior to submitting for approval.');
+        current.state = -5; //check state value
+        //current.approval = 'not requested'; //remove it if you don't want to set approval
+
+    }
+
+})(current, previous);
