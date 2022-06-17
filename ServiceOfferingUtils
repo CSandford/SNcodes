@@ -1,0 +1,23 @@
+var ServiceOfferingUtils = Class.create();
+ServiceOfferingUtils.prototype = {
+    initialize: function() {},
+    getBusinessOffering: function(service) {
+        if (!service) {
+            return;
+        }
+        var getBusiness = new GlideRecord('cmdb_rel_ci');
+        getBusiness.addQuery('child', service);
+        getBusiness.query();
+
+        var result = [];
+
+        while (getBusiness.next()) {
+            result.push(getBusiness.getValue('parent'));
+        }
+
+        result = new global.ArrayUtil().unique(result);
+
+        return "sys_idIN" + result.join(',');
+    },
+    type: 'ServiceOfferingUtils'
+};
