@@ -1,0 +1,22 @@
+function onSubmit() {
+    if (g_form.getValue("field_name") == 'abc') //condition when attachment needs to be mandatory for example 
+    {
+        //Works in non-portal ui
+        try {
+            var attachments = document.getElementById('header_attachment_list_label');
+            if (attachments.style.visibility == 'hidden' || attachments.style.display == 'none') {
+                alert('Attachment madatory');
+                return false;
+            }
+        }
+
+        //For Service Portal
+        catch (e) {
+            var count = getSCAttachmentCount();
+            if (count <= 0) {
+                alert('Attachment madatory');
+                return false;
+            }
+        }
+    }
+}
